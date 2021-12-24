@@ -1,6 +1,7 @@
 import ParsingXML as PXML
 import re
 
+
 class TrafficFlow():
 
     def __init__(self, fcdoutput_parsed):
@@ -27,8 +28,8 @@ class TrafficFlow():
         i = 0
         for time in fcdoutput_parsed:
             for vehicle in fcdoutput_parsed[time]:
-                current_lane = str(fcdoutput_parsed[time][vehicle][1])
-                lane_pattern = "[0-9]{3,5}[#|_][0-9]"
+                current_lane = str(fcdoutput_parsed[time][vehicle][1])[:-2]
+                lane_pattern = "[0-9]{2,5}[#|_]*[0-9]*eishim"
                 current_lane = re.findall(lane_pattern, current_lane)[0]
                 if current_lane in lane:
                     temp_traffic_flow[current_lane] += 1
@@ -55,6 +56,6 @@ if __name__ == '__main__':
 
     TF = TrafficFlow(fcdoutput_parsed)
     traffic_flow = TF.getTrafficFlow()
-    
+
     for time in traffic_flow:
         print(time, traffic_flow[time])
