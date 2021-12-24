@@ -1,4 +1,4 @@
-import ParsingXML as PXML
+import parsingXML as PXML
 import re
 
 
@@ -39,12 +39,14 @@ class TrafficFlow():
 
             if duration_index % duration == 0:
                 traffic_flow[time] = temp_traffic_flow
+                last_traffic_flow = temp_traffic_flow
                 duration_index = 1
                 lane = set()
                 temp_traffic_flow = {}
             else:
                 duration_index += 1
 
+        traffic_flow[time] = last_traffic_flow
         return traffic_flow
 
 
