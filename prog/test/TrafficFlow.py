@@ -29,7 +29,7 @@ class TrafficFlow():
         for time in fcdoutput_parsed:
             for vehicle in fcdoutput_parsed[time]:
                 current_lane = str(fcdoutput_parsed[time][vehicle][1])[:-2]
-                lane_pattern = "[0-9]{2,5}[#|_]*[0-9]*eishim"
+                lane_pattern = "[0-9]{2,5}[#|_]*[0-9]*"
                 current_lane = re.findall(lane_pattern, current_lane)[0]
                 if current_lane in lane:
                     temp_traffic_flow[current_lane] += 1
