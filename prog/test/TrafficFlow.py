@@ -1,4 +1,4 @@
-import ParsingXML as PXML
+import parsingXML as PXML
 import re
 
 
@@ -29,8 +29,22 @@ class TrafficFlow():
         for time in fcdoutput_parsed:
             for vehicle in fcdoutput_parsed[time]:
                 current_lane = str(fcdoutput_parsed[time][vehicle][1])[:-2]
-                lane_pattern = "[0-9]{2,5}[#|_]*[0-9]*"
+                lane_pattern = "[:]*[-]*[0-9]{2,5}[#|_]*[0-9]*"
                 current_lane = re.findall(lane_pattern, current_lane)[0]
+
+                # レーンidの一番前のところに「:」があればスキップして
+                # それ以外のレーンidを「-」一つ削除する
+                if current_lane[0] == ':':
+                    pass
+                else:
+                    current_lane = current_lane[1:]
+
+                if current_lane in lane:
+                    temp_traffic_flow[current_lane] += 1
+                else:
+                    lane.add(current_lane)
+                    temp_traffic_flow[current_lane] = 1
+
                 if current_lane in lane:
                     temp_traffic_flow[current_lane] += 1
                 else:
@@ -39,12 +53,14 @@ class TrafficFlow():
 
             if duration_index % duration == 0:
                 traffic_flow[time] = temp_traffic_flow
+                last_traffic_flow = temp_traffic_flow
                 duration_index = 1
                 lane = set()
                 temp_traffic_flow = {}
             else:
                 duration_index += 1
 
+        traffic_flow[time] = last_traffic_flow
         return traffic_flow
 
 
