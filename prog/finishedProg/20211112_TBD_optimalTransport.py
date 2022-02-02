@@ -17,7 +17,7 @@ totalFlow = 1
 mu = 1.3
 delta_t = 1
 repeatNum = 30 #set parameters for the searching the route
-f_path = './../sumoScenarios/LuSTScenario-master/scenario/lust.net.xml'
+f_path = './lust.net.xml'
 
 '''
 read the road data file and process it
